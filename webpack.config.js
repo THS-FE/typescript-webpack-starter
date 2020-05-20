@@ -1,6 +1,7 @@
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 const config = {
@@ -20,8 +21,8 @@ const config = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          // 从JS字符串中创建 `style` 节点到HTML Header中
-          'style-loader',
+          // 提取到单独的CSS文件
+          MiniCssExtractPlugin.loader,
           // 转换 CSS 到 CommonJS
           'css-loader',
           // 给 CSS 添加前缀以适应各浏览器
@@ -56,6 +57,10 @@ const config = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({ template: 'public/index.html', title: 'TypeScript-Webpack-starter' }),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[id].css',
+    }),
   ],
 };
 
